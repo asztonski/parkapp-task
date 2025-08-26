@@ -4,12 +4,23 @@ const { createHandler } = require("graphql-http/lib/use/node");
 const { URL } = require("url");
 
 const schema = buildSchema(`
-  type Query {
-    dummy: Boolean!
+  type LoginPayload { token: String! }
+  type Query { dummy: Boolean! }
+  type Mutation {
+    login(email: String!, password: String!): LoginPayload!
   }
 `);
 
-const rootValue = { dummy: () => true };
+const rootValue = {
+  dummy: () => true,
+  login: ({ email, password }) => {
+    if (email === "tester@parkapp.pl" && password === "123$TesT$321") {
+      return { token: "mock-token-valid" };
+    }
+    throw new Error("Invalid credentials");
+  },
+};
+
 const handler = createHandler({ schema, rootValue });
 
 function setCors(res) {

@@ -1,12 +1,14 @@
-﻿import './index.css';
+﻿import LoginProbe from './graphql/devtools/LoginProbe';
+import './index.css';
+
 export default function App() {
   return (
     <main className="grid min-h-dvh place-items-center">
-      <h1>OtwÃ³rz bramÄ™</h1>
-      <h2>DÅ‚uga nazwa pilota</h2>
+      <LoginProbe />
+      <h1>Otwórz bramę</h1>
+      <h2>Długa nazwa pilota</h2>
       <button>Przycisk</button>
-      <p>Wybierz bramÄ™, by otworzyÄ‡</p>
+      <p>Wybierz bramę, by otworzyć</p>
     </main>
   );
 }
-

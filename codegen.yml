@@ -1,0 +1,13 @@
+﻿overwrite: true
+schema: "mocks/graphql/schema.graphql"
+documents:
+  - "src/graphql/documents/**/*.{ts,tsx,graphql}"
+generates:
+  src/graphql/generated/urql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-urql"
+    config:
+      withHooks: true
+      gqlImport: "urql#gql"
