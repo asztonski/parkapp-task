@@ -1,1 +1,67 @@
 @import 'tailwindcss';
+
+@theme inline {
+  --color-background: #f8f8f8;
+  --color-foreground: #15215c; /* blue text color */
+  --color-soft-white: #f8f8f8;
+  --color-accent: #f3ad3e; /* orange accent color */
+  --color-grey: #c6c6c6; /* grey color */
+
+  /* Fonts (aliases) */
+  --font-dm:
+    'DM Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --font-poppins:
+    'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans';
+  --font-lato:
+    'Lato', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans';
+
+  /* Defaults */
+  --font-sans: var(--font-dm);
+
+  /* Sizes */
+  --text-heading: 2rem;
+  --text-button: 17.25px;
+
+  --leading-header: 40px;
+  --leading-text: 24px;
+
+  /* Transitions */
+  --ease-ease: ease;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  /* App defaults */
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  button,
+  input,
+  select,
+  textarea {
+    color: inherit;
+    font: inherit;
+  }
+
+  /* Typography */
+  h1 {
+    @apply font-poppins text-heading leading-header font-bold;
+  }
+  h2 {
+    @apply leading-header font-sans text-2xl font-bold;
+  }
+  p {
+    @apply leading-text font-sans text-lg font-normal;
+  }
+
+  /* Buttons */
+  button {
+    @apply font-lato text-button cursor-pointer leading-none font-medium;
+  }
+}
