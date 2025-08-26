@@ -1,8 +1,7 @@
-﻿import { useMutation } from "urql";
-import { LOGIN_MUTATION } from "../documents/mutations/login";
+﻿import { useLoginMutation } from "../generated/urql";
 
 export default function LoginProbe() {
-  const [result, execute] = useMutation<{ login: { token: string } }, { email: string; password: string }>(LOGIN_MUTATION);
+  const [result, execute] = useLoginMutation();
 
   async function loginValid() {
     await execute({ email: "tester@parkapp.pl", password: "123$TesT$321" });
