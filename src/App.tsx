@@ -1,14 +1,12 @@
-import './index.css';
-import PingProbe from './graphql/devtools/PingProbe';
-
+﻿import './index.css';
 export default function App() {
   return (
     <main className="grid min-h-dvh place-items-center">
-      <PingProbe />
-      <h1>Otwórz bramę</h1>
-      <h2>Długa nazwa pilota</h2>
+      <h1>OtwÃ³rz bramÄ™</h1>
+      <h2>DÅ‚uga nazwa pilota</h2>
       <button>Przycisk</button>
-      <p>Wybierz bramę, by otworzyć</p>
+      <p>Wybierz bramÄ™, by otworzyÄ‡</p>
     </main>
   );
 }
+
