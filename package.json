@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@apollo/client": "^4.0.1",
+        "@graphql-tools/schema": "^10.0.25",
         "graphql": "^16.11.0",
         "graphql-tag": "^2.12.6",
         "react": "^19.1.1",
