@@ -1,0 +1,14 @@
+﻿type LoginPayload { token: String! }
+
+type Query {
+  dummy: Boolean!
+}
+
+type Mutation {
+  login(email: String!, password: String!): LoginPayload!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
