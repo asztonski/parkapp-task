@@ -1,7 +1,7 @@
-﻿import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import Login from '../pages/Login'
-import Pilot from '../pages/PilotPage'
-import NotFound from '../pages/NotFoundPage'
+﻿import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Login from '../pages/Login';
+import Pilot from '../pages/Pilot';
+import NotFound from '../pages/NotFound';
 
 export default function RootRouter() {
   return (
@@ -13,5 +13,5 @@ export default function RootRouter() {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
