@@ -1,5 +1,7 @@
 ﻿import React, { useState } from 'react';
 import { useLoginUserMutation } from '../graphql/generated/urql';
+import { useNavigate } from 'react-router-dom';
+import { setAuth } from '../auth/auth';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -10,24 +12,36 @@ export default function LoginPage() {
   const [token, setToken] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  const navigate = useNavigate();
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    e.stopPropagation();
     setSubmitError(null);
     setToken(null);
 
-    const res = await loginUser({ email, password });
+    try {
+      const res = await loginUser({ email, password });
 
-    if (res.error) {
-      const isNetwork = !!res.error.networkError;
-      const message = isNetwork
-        ? 'Błąd połączenia z serwerem.'
-        : res.error.message || 'Nieprawidłowe dane logowania.';
-      setSubmitError(message);
-      return;
+      if (res.error) {
+        const isNetwork = !!res.error.networkError;
+        const message = isNetwork ? 'Błąd połączenia z serwerem.' : 'Nieprawidłowe dane logowania.';
+        setSubmitError(message);
+        return;
+      }
+
+      const t = res.data?.loginUser?.token ?? null;
+      if (!t) {
+        setSubmitError('Nieprawidłowe dane logowania.');
+        return;
+      }
+
+      setToken(t);
+      setAuth(true, 'session');
+      navigate('/pilot', { replace: true });
+    } catch {
+      setSubmitError('Błąd połączenia z serwerem.');
     }
-
-    const t = res.data?.loginUser?.token ?? null;
-    setToken(t);
   }
 
   return (
@@ -35,7 +49,7 @@ export default function LoginPage() {
       <section className="w-full max-w-sm rounded-2xl border bg-white p-6 shadow-sm">
         <h1 className="text-xl font-semibold tracking-tight">Logowanie</h1>
 
-        <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
+        <form noValidate onSubmit={handleSubmit} className="mt-6 grid gap-4">
           <div className="grid gap-1.5">
             <label htmlFor="email" className="text-sm font-medium">
               E-mail
