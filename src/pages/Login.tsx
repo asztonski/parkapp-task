@@ -1,5 +1,6 @@
 ﻿import React, { useState } from 'react';
 import { useLoginUserMutation } from '../graphql/generated/urql';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -9,6 +10,8 @@ export default function LoginPage() {
 
   const [token, setToken] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -23,6 +26,7 @@ export default function LoginPage() {
         ? 'Błąd połączenia z serwerem.'
         : res.error.message || 'Nieprawidłowe dane logowania.';
       setSubmitError(message);
+      navigate('/pilot', { replace: true });
       return;
     }
 
