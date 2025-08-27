@@ -24,11 +24,11 @@ export type LoginPayload = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  login: LoginPayload;
+  loginUser: LoginPayload;
 };
 
 
-export type MutationLoginArgs = {
+export type MutationLoginUserArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 };
@@ -38,23 +38,23 @@ export type Query = {
   dummy: Scalars['Boolean']['output'];
 };
 
-export type LoginMutationVariables = Exact<{
+export type LoginUserMutationVariables = Exact<{
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginPayload', token: string } };
+export type LoginUserMutation = { __typename?: 'Mutation', loginUser: { __typename?: 'LoginPayload', token: string } };
 
 
-export const LoginDocument = gql`
-    mutation Login($email: String!, $password: String!) {
-  login(email: $email, password: $password) {
+export const LoginUserDocument = gql`
+    mutation loginUser($email: String!, $password: String!) {
+  loginUser(email: $email, password: $password) {
     token
   }
 }
     `;
 
-export function useLoginMutation() {
-  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+export function useLoginUserMutation() {
+  return Urql.useMutation<LoginUserMutation, LoginUserMutationVariables>(LoginUserDocument);
 };

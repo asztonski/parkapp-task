@@ -1,20 +1,21 @@
-{
-    "files":  [
-
-              ],
-    "references":  [
-                       {
-                           "path":  "./tsconfig.app.json"
-                       },
-                       {
-                           "path":  "./tsconfig.node.json"
-                       }
-                   ],
-    "compilerOptions":  {
-                            "noImplicitReturns":  true,
-                            "noImplicitOverride":  true,
-                            "strict":  true,
-                            "noUncheckedIndexedAccess":  true,
-                            "exactOptionalPropertyTypes":  true
-                        }
+﻿{
+  "compilerOptions": {
+    "composite": true,
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "skipLibCheck": true,
+    "noUncheckedIndexedAccess": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "types": ["vite/client"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "env.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }
