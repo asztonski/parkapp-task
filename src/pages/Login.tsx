@@ -1,11 +1,11 @@
 ﻿import React, { useState } from 'react';
-import { useLoginMutation } from '../graphql/generated/urql';
+import { useLoginUserMutation } from '../graphql/generated/urql';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [{ fetching }, loginUser] = useLoginMutation();
+  const [{ fetching }, loginUser] = useLoginUserMutation();
 
   const [token, setToken] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);

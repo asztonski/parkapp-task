@@ -1,11 +1,11 @@
-﻿import { createClient, cacheExchange, fetchExchange } from "urql";
+﻿import { createClient, cacheExchange, fetchExchange } from 'urql';
 
-const url = import.meta.env.VITE_GRAPHQL_URL;
+const url = import.meta.env['VITE_GRAPHQL_URL'];
 
 export function makeUrqlClient() {
   return createClient({
     url,
     exchanges: [cacheExchange, fetchExchange],
-    requestPolicy: "cache-first",
+    requestPolicy: 'cache-first',
   });
 }
