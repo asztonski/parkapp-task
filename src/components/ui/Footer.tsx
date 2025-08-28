@@ -27,7 +27,7 @@ export default function Footer() {
   const [activeId, setActiveId] = useState<FooterItemId>('menu');
 
   return (
-    <footer className="flex items-center justify-between px-6 py-4">
+    <footer className="flex items-center justify-between">
       <nav aria-label="Primary actions" className="w-full">
         <ul className="flex items-center justify-between gap-2">
           {items.map(({ id, Icon, label, aria }) => {
