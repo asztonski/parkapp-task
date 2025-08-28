@@ -45,7 +45,7 @@ export default function LoginPage() {
   }
 
   return (
-    <section className="w-full max-w-sm rounded-2xl border bg-white p-6 shadow-sm">
+    <section className="mx-auto w-full max-w-md p-6">
       <h1 className="text-xl font-semibold tracking-tight">Logowanie</h1>
 
       <form noValidate onSubmit={handleSubmit} className="mt-6 grid gap-4">
