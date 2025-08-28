@@ -27,8 +27,8 @@ export default function RootRouter() {
         ? 'Zaloguj się'
         : '404 - Nie znaleziono strony';
 
-    const showBack = isPilot || !isKnown; // /pilot oraz 404
-    const showFooter = isPilot; // nie pokazuj na /login ani 404
+    const showBack = isPilot || !isKnown;
+    const showFooter = isPilot;
 
     return { title, showBack, showFooter };
   }, [location.pathname]);

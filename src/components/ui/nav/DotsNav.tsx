@@ -1,15 +1,10 @@
 import DotButton from '../button/DotButton';
 
 type DotsNavProps = {
-  /** Liczba kropek (domyślnie 4) */
   count?: number;
-  /** Indeks aktywnej kropki (0-based) */
   current?: number;
-  /** Zmiana aktywnej kropki */
   onChange?: (index: number) => void;
-  /** Dodatkowe klasy kontenera */
   className?: string;
-  /** Rozmiar kropek */
   size?: 'sm' | 'md' | 'lg';
 };
 
