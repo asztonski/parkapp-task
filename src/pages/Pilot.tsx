@@ -1,19 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import GateButton from '../components/ui/button/GateButton';
 import DotsNav from '../components/ui/nav/DotsNav';
-
-type Gate = { id: string; label: string };
-
-const gates: Gate[] = [
-  { id: 'gate-main', label: 'Brama główna' },
-  { id: 'gate-garage', label: 'Brama garażowa' },
-  { id: 'barrier-entry', label: 'Szlaban wjazdowy' },
-  { id: 'barrier-exit', label: 'Szlaban wyjazdowy' },
-];
+import { gates } from '../data/gates'; // gates: Gate[][]
 
 export default function Pilot() {
-  const [activeId, setActiveId] = useState<string>(gates[0].id);
-  const [page, setPage] = useState<number>(0); // aktywna kropka (paginacja)
+  const [page, setPage] = useState<number>(0);
+  const currentGates = useMemo(() => gates[page] ?? [], [page]);
+  const [activeId, setActiveId] = useState<string>(currentGates[0]?.id ?? '');
+
+  useEffect(() => {
+    if (!currentGates.some((g) => g.id === activeId)) {
+      setActiveId(currentGates[0]?.id ?? '');
+    }
+  }, [page, currentGates, activeId]);
 
   return (
     <section className="py-4">
@@ -21,8 +20,8 @@ export default function Pilot() {
 
       <div className="ml-auto max-w-60">
         <h2 className="text-center font-semibold tracking-tight">Długa nazwa pilota</h2>
-        <ul className="mt-8 flex flex-col gap-4">
-          {gates.map(({ id, label }) => (
+        <ul className="mt-8 flex flex-col gap-5">
+          {currentGates.map(({ id, label }) => (
             <li key={id}>
               <GateButton
                 label={label}
@@ -32,9 +31,11 @@ export default function Pilot() {
             </li>
           ))}
         </ul>
-        <p className="mt-12">Wybierz bramę by otworzyć</p>
+        <p className="mt-10">Wybierz bramę, by otworzyć</p>
       </div>
-      <DotsNav count={4} current={page} onChange={setPage} className="mt-20" />
+
+      {/* liczba kropek = liczba stron */}
+      <DotsNav count={gates.length} current={page} onChange={setPage} className="mt-20" />
     </section>
   );
 }
