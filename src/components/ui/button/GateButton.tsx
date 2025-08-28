@@ -18,7 +18,7 @@ export default function GateButton({
       type={type}
       onClick={onClick}
       aria-pressed={isActive}
-      className={`w-full rounded-2xl border-2 px-6 py-4 text-center leading-none font-medium transition-all duration-200 ease-in-out outline-none select-none ${
+      className={`font-button w-full rounded-xl border-2 p-3 text-center leading-none transition-all duration-200 ease-in-out outline-none select-none ${
         isActive
           ? 'bg-foreground text-soft-white border-transparent'
           : 'bg-soft-white text-foreground border-foreground'
