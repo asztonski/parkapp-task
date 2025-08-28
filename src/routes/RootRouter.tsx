@@ -24,7 +24,7 @@ export default function RootRouter() {
       ? 'Otwórz bramę'
       : isLogin || isRoot
         ? 'Zaloguj się'
-        : 'Przykro nam, strona nie została znaleziona :(';
+        : '404 - Nie znaleziono strony';
 
     const showBack = isPilot || !isKnown; // pokaż tylko na /pilot oraz 404
 
