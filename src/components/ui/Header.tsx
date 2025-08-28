@@ -8,7 +8,7 @@ type HeaderProps = {
 export default function Header({ children }: HeaderProps) {
   return (
     <header
-      className={`header-gradient relative h-[280px] rounded-b-2xl pt-16 pl-19 shadow-lg shadow-gray-200`}
+      className={`header-gradient relative h-[280px] overflow-hidden rounded-b-2xl pt-16 pl-19 shadow-lg shadow-gray-200`}
     >
       <img
         src={pilotHeader}
