@@ -7,6 +7,7 @@ import NotFound from '../pages/NotFound';
 import ProtectedRoute from './ProtectedRoute';
 import Header from '../components/ui/Header';
 import GoBackButton from '../components/ui/button/GoBackButton';
+import NavFooter from '../components/ui/nav/NavFooter';
 
 export default function RootRouter() {
   const location = useLocation();
@@ -32,7 +33,7 @@ export default function RootRouter() {
   }, [location.pathname]);
 
   return (
-    <div className="m-auto flex min-h-dvh max-w-2xl flex-col">
+    <div className="m-auto flex min-h-dvh max-w-xl flex-col">
       <Header>
         {showBack && <GoBackButton className="top-14 left-4" />}
         <h1 className="w-min">{title}</h1>
@@ -48,6 +49,7 @@ export default function RootRouter() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      <NavFooter />
     </div>
   );
 }

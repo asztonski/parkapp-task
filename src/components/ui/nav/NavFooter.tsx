@@ -1,20 +1,20 @@
 import { useState } from 'react';
-import LocationIcon from '../../assets/location-icon.svg?react';
-import ScanIcon from '../../assets/scan-icon.svg?react';
-import CarIcon from '../../assets/car-icon.svg?react';
-import WalletIcon from '../../assets/wallet-icon.svg?react';
-import MenuIcon from '../../assets/menu-icon.svg?react';
+import LocationIcon from '../../../assets/location-icon.svg?react';
+import ScanIcon from '../../../assets/scan-icon.svg?react';
+import CarIcon from '../../../assets/car-icon.svg?react';
+import WalletIcon from '../../../assets/wallet-icon.svg?react';
+import MenuIcon from '../../../assets/menu-icon.svg?react';
 
-type FooterItemId = 'location' | 'scan' | 'car' | 'wallet' | 'menu';
+type NavFooterItemId = 'location' | 'scan' | 'car' | 'wallet' | 'menu';
 
-type FooterItem = {
-  id: FooterItemId;
+type NavFooterItem = {
+  id: NavFooterItemId;
   Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   label: string; // tooltip
   aria: string; // nazwę akcji czytnikom ekranu nada przycisk (aria-label)
 };
 
-const items: FooterItem[] = [
+const items: NavFooterItem[] = [
   { id: 'location', Icon: LocationIcon, label: 'Location', aria: 'Open location' },
   { id: 'scan', Icon: ScanIcon, label: 'QR Scanner', aria: 'Open QR scanner' },
   { id: 'car', Icon: CarIcon, label: 'Vehicle', aria: 'Go to vehicles' },
@@ -22,12 +22,12 @@ const items: FooterItem[] = [
   { id: 'menu', Icon: MenuIcon, label: 'Menu', aria: 'Open menu' },
 ];
 
-export default function Footer() {
+export default function NavFooter() {
   // domyślnie aktywne "menu" (zmień jeśli chcesz inny start)
-  const [activeId, setActiveId] = useState<FooterItemId>('menu');
+  const [activeId, setActiveId] = useState<NavFooterItemId>('menu');
 
   return (
-    <footer className="flex items-center justify-between">
+    <footer className="flex items-center justify-between px-6">
       <nav aria-label="Primary actions" className="w-full">
         <ul className="flex items-center justify-between gap-2">
           {items.map(({ id, Icon, label, aria }) => {
