@@ -5,6 +5,8 @@
   --color-foreground: #15215c; /* blue text color */
   --color-soft-white: #f8f8f8;
   --color-accent: #f3ad3e; /* orange accent color */
+  --color-orange-light: #fadf99;
+  --color-orange-dark: #ffb034;
   --color-grey: #c6c6c6; /* grey color */
 
   /* Fonts (aliases) */
@@ -63,5 +65,9 @@
   /* Buttons */
   button {
     @apply font-lato text-button cursor-pointer leading-none font-medium;
+  }
+
+  .header-gradient {
+    @apply from-orange-light to-orange-dark bg-gradient-to-br;
   }
 }
