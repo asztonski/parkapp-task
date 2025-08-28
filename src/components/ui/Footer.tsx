@@ -1,37 +1,66 @@
-import CarIcon from '../../assets/car-icon.svg';
-import LocationIcon from '../../assets/location-icon.svg';
-import WalletIcon from '../../assets/wallet-icon.svg';
-import ScanIcon from '../../assets/scan-icon.svg';
-import MenuIcon from '../../assets/menu-icon.svg';
+import LocationIcon from '../../assets/location-icon.svg?react';
+import ScanIcon from '../../assets/scan-icon.svg?react';
+import CarIcon from '../../assets/car-icon.svg?react';
+import WalletIcon from '../../assets/wallet-icon.svg?react';
+import MenuIcon from '../../assets/menu-icon.svg?react';
 
 type FooterItem = {
   id: 'location' | 'scan' | 'car' | 'wallet' | 'menu';
-  src: string;
-  label: string;
-  alt: string;
+  Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  label: string; // tooltip
+  aria: string; // nazwa akcji dla przycisku
+  className?: string; // indywidualny kolor/rozmiar
 };
 
 const items: FooterItem[] = [
-  { id: 'location', src: LocationIcon, label: 'Location', alt: 'Location' },
-  { id: 'scan', src: ScanIcon, label: 'QR Scanner', alt: 'QR scanner' },
-  { id: 'car', src: CarIcon, label: 'Vehicle', alt: 'Vehicle' },
-  { id: 'wallet', src: WalletIcon, label: 'Wallet', alt: 'Wallet' },
-  { id: 'menu', src: MenuIcon, label: 'Menu', alt: 'Menu' },
+  {
+    id: 'location',
+    Icon: LocationIcon,
+    label: 'Location',
+    aria: 'Open location',
+    className: 'text-slate-400',
+  },
+  {
+    id: 'scan',
+    Icon: ScanIcon,
+    label: 'QR Scanner',
+    aria: 'Open QR scanner',
+    className: 'text-slate-400',
+  },
+  {
+    id: 'car',
+    Icon: CarIcon,
+    label: 'Vehicle',
+    aria: 'Go to vehicles',
+    className: 'text-slate-400',
+  },
+  {
+    id: 'wallet',
+    Icon: WalletIcon,
+    label: 'Wallet',
+    aria: 'Wallet and payments',
+    className: 'text-slate-400',
+  },
+  { id: 'menu', Icon: MenuIcon, label: 'Menu', aria: 'Open menu', className: 'text-blue-900' }, // np. aktywna
 ];
 
 export default function Footer() {
   return (
-    <footer className="flex items-center justify-between">
+    <footer className="flex items-center justify-between px-6 py-4">
       <nav aria-label="Primary actions" className="w-full">
         <ul className="flex items-center justify-between gap-2">
-          {items.map(({ id, src, label, alt }) => (
+          {items.map(({ id, Icon, label, aria, className }) => (
             <li key={id}>
               <button
                 type="button"
                 title={label}
-                className="grid h-12 w-12 place-items-center rounded-xl opacity-60 transition-opacity duration-200 ease-in-out hover:opacity-100"
+                aria-label={aria}
+                className="group grid h-12 w-12 place-items-center rounded-xl transition-colors duration-200 ease-in-out hover:text-blue-900"
               >
-                <img src={src} alt={alt} className="pointer-events-none select-none" />
+                <Icon
+                  aria-hidden="true"
+                  className={`h-6 w-6 ${className ?? ''} transition-colors duration-200 ease-in-out`}
+                />
               </button>
             </li>
           ))}
