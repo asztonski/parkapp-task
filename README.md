@@ -1,5 +1,11 @@
 # ParkApp – Front‑End Task (React + Vite + Tailwind + GraphQL)
 
+
+
+https://github.com/user-attachments/assets/ed775fd2-8368-4f87-b30b-1a7bb3c7ab52
+
+
+
 A compact, production‑style demo that shows a clean login flow, protected routing, and the "Remote Pilot" screen coded from Figma.
 
 ## What’s done
