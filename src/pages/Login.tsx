@@ -1,6 +1,6 @@
 ﻿import React, { useState } from 'react';
 import { useLoginUserMutation } from '../graphql/generated/urql';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; // NEW
 import { setAuth } from '../auth/auth';
 
 export default function LoginPage() {
@@ -13,6 +13,9 @@ export default function LoginPage() {
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from =
+    (location.state as { from?: { pathname?: string } } | null)?.from?.pathname ?? '/pilot';
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -38,7 +41,7 @@ export default function LoginPage() {
 
       setToken(t);
       setAuth(true, 'session');
-      navigate('/pilot', { replace: true });
+      navigate(from, { replace: true });
     } catch {
       setSubmitError('Błąd połączenia z serwerem.');
     }
