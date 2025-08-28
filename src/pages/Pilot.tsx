@@ -24,7 +24,14 @@ export default function Pilot() {
   return (
     <section className="relative py-4">
       <div className="flex w-full">
-        <RemotePilot className="relative -left-10 min-w-24" activeIndex={activeIndex} />
+        <RemotePilot
+          className="relative -left-10 min-w-24"
+          activeIndex={activeIndex}
+          onSelect={(i) => {
+            const gate = currentGates[i];
+            if (gate) setActiveId(gate.id);
+          }}
+        />
         <div className="ml-auto">
           <h2 className="text-center font-semibold tracking-tight whitespace-nowrap">
             Długa nazwa pilota

@@ -1,17 +1,25 @@
+import React from 'react';
+
 type RemotePilotProps = {
+  /** 0=A, 1=B, 2=C, 3=D */
   activeIndex?: number;
+  /** Kolor aktywnego segmentu */
   activeFill?: string;
+  /** Kliknięcie segmentu A–D zwraca jego indeks (0–3) */
+  onSelect?: (index: number) => void;
   className?: string;
 };
 
 export default function RemotePilot({
   activeIndex = 0,
   activeFill = '#F3AD3E',
+  onSelect,
   className = '',
 }: RemotePilotProps) {
-  const x1 = -33.1639;
-  const x2 = 103.164;
+  const x1 = -33.1639; // lewa krawędź WNĘTRZA panelu
+  const x2 = 103.164; // prawa krawędź WNĘTRZA panelu
 
+  // A: 71.6285–134.759, B: 134.759–200.839, C: 200.839–266.919, D: 266.919–332.967
   const sections = [
     { y1: 71.6285, y2: 134.759 }, // A
     { y1: 134.759, y2: 200.839 }, // B
@@ -19,7 +27,15 @@ export default function RemotePilot({
     { y1: 266.919, y2: 332.967 }, // D
   ] as const;
 
+  const labels = ['A', 'B', 'C', 'D'] as const;
   const clampIndex = Math.max(0, Math.min(3, activeIndex));
+
+  const onKey = (e: React.KeyboardEvent<SVGPathElement>, i: number) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onSelect?.(i);
+    }
+  };
 
   return (
     <svg
@@ -27,33 +43,47 @@ export default function RemotePilot({
       height="398"
       viewBox="0 0 137 398"
       xmlns="http://www.w3.org/2000/svg"
-      className={`${className}`}
+      className={className}
       fill="none"
     >
       <g clipPath="url(#clip0_5086_1235)">
+        {/* Korpus */}
         <path
           d="M73.7039 374.219H-3.67217C-38.5865 374.219 -66.9683 343.811 -66.9683 306.427V67.7919C-67 30.4081 -38.5865 0 -3.70388 0H73.6721C108.586 0 136.968 30.4081 136.968 67.7919V306.427C136.968 343.811 108.555 374.219 73.6721 374.219H73.7039ZM-3.70388 2.94885C-36.9692 2.94885 -64.0508 32.0252 -64.0508 67.7919V306.427C-64.0508 342.194 -36.9692 371.302 -3.67217 371.302H73.7039C107.001 371.302 134.083 342.194 134.083 306.427V67.7919C134.083 32.0252 106.969 2.94885 73.7039 2.94885H-3.67217H-3.70388Z"
           fill="#15215C"
         />
 
+        {/* Segmenty A–D: klik/Enter/Space; fill=transparent dla nieaktywnych -> działa pointer-events */}
         {sections.map((s, i) => (
           <path
             key={i}
             d={`M ${x1} ${s.y1} H ${x2} V ${s.y2} H ${x1} Z`}
-            fill={i === clampIndex ? activeFill : 'none'}
+            fill={i === clampIndex ? activeFill : 'transparent'}
             clipPath="url(#panelInnerClip)"
+            // interakcje
+            onClick={() => onSelect?.(i)}
+            onKeyDown={(e) => onKey(e, i)}
+            tabIndex={0}
+            role="button"
+            aria-label={`Wybierz segment ${labels[i]}`}
+            aria-pressed={i === clampIndex}
+            style={{ cursor: onSelect ? ('pointer' as const) : 'default', outline: 'none' }}
           />
         ))}
 
+        {/* Stopka/obudowa */}
         <path
           d="M62.2243 398H7.74396C-5.41631 398 -16.1348 385.919 -16.1665 371.048L-13.2173 370.921C-13.2173 384.239 -3.79903 395.051 7.77567 395.051H62.256C73.8307 395.051 83.249 384.239 83.249 370.921H86.1982C86.1982 385.856 75.4797 398 62.2877 398H62.2243ZM-16.1665 371.048V370.921H-13.2173L-16.1665 371.048Z"
           fill="#15215C"
         />
 
+        {/* Ramka panelu */}
         <path
           d="M54.7404 335.915H15.2596C-13.0588 335.915 -36.113 312.864 -36.113 284.548V120.047C-36.113 91.7315 -13.0588 68.6797 15.2596 68.6797H54.7404C83.0587 68.6797 106.113 91.7315 106.113 120.047V284.548C106.113 312.864 83.0587 335.915 54.7404 335.915ZM15.2596 71.6285C-11.4415 71.6285 -33.1639 93.3486 -33.1639 120.047V284.548C-33.1639 311.247 -11.4415 332.967 15.2596 332.967H54.7404C81.4414 332.967 103.164 311.247 103.164 284.548V120.047C103.164 93.3486 81.4414 71.6285 54.7404 71.6285H15.2596Z"
           fill="#15215C"
         />
+
+        {/* Litery A, B, C, D */}
         <path
           d="M42.3412 108.886H31.9081L29.5615 115.417H26.1683L35.6818 90.4949H38.5675L48.081 115.417H44.7196L42.3412 108.886ZM32.9229 106.19H41.3899L37.1405 94.5535L32.9229 106.19Z"
           fill="#15215C"
@@ -70,6 +100,8 @@ export default function RemotePilot({
           d="M28.6101 314.766V289.844H35.6501C37.8064 289.844 39.7408 290.319 41.3898 291.271C43.0705 292.222 44.339 293.585 45.2586 295.361C46.1783 297.137 46.6222 299.166 46.6222 301.449V303.034C46.6222 305.381 46.1783 307.442 45.2586 309.217C44.339 310.993 43.0705 312.356 41.3898 313.276C39.7091 314.227 37.743 314.703 35.5232 314.735H28.6418L28.6101 314.766ZM31.8764 292.539V312.071H35.3329C37.8699 312.071 39.836 311.278 41.2313 309.693C42.6266 308.108 43.3559 305.856 43.3559 302.971V301.512C43.3559 298.69 42.69 296.471 41.3581 294.917C40.0262 293.363 38.1553 292.539 35.7135 292.539H31.8764Z"
           fill="#15215C"
         />
+
+        {/* Poziome linie / kropka u góry */}
         <path d="M104.496 134.759H-34.4957V137.708H104.496V134.759Z" fill="#15215C" />
         <path d="M104.496 200.839H-34.4957V203.788H104.496V200.839Z" fill="#15215C" />
         <path
@@ -83,7 +115,6 @@ export default function RemotePilot({
         <clipPath id="clip0_5086_1235">
           <rect width="204" height="398" fill="white" transform="translate(-67)" />
         </clipPath>
-
         <clipPath id="panelInnerClip">
           <path d="M15.2596 71.6285C-11.4415 71.6285 -33.1639 93.3486 -33.1639 120.047V284.548C-33.1639 311.247 -11.4415 332.967 15.2596 332.967H54.7404C81.4414 332.967 103.164 311.247 103.164 284.548V120.047C103.164 93.3486 81.4414 71.6285 54.7404 71.6285H15.2596Z" />
         </clipPath>
