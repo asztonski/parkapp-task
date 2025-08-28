@@ -12,7 +12,7 @@ import NavFooter from '../components/ui/nav/NavFooter';
 export default function RootRouter() {
   const location = useLocation();
 
-  const { title, showBack } = useMemo(() => {
+  const { title, showBack, showFooter } = useMemo(() => {
     const path = location.pathname;
 
     const isPilot = !!matchPath({ path: '/pilot', end: true }, path);
@@ -27,9 +27,10 @@ export default function RootRouter() {
         ? 'Zaloguj się'
         : '404 - Nie znaleziono strony';
 
-    const showBack = isPilot || !isKnown; // pokaż tylko na /pilot oraz 404
+    const showBack = isPilot || !isKnown; // /pilot oraz 404
+    const showFooter = isPilot; // nie pokazuj na /login ani 404
 
-    return { title, showBack };
+    return { title, showBack, showFooter };
   }, [location.pathname]);
 
   return (
@@ -49,7 +50,8 @@ export default function RootRouter() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-      <NavFooter />
+
+      {showFooter && <NavFooter />}
     </div>
   );
 }
