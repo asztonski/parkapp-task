@@ -10,8 +10,8 @@ type NavFooterItemId = 'location' | 'scan' | 'car' | 'wallet' | 'menu';
 type NavFooterItem = {
   id: NavFooterItemId;
   Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  label: string; // tooltip
-  aria: string; // nazwę akcji czytnikom ekranu nada przycisk (aria-label)
+  label: string;
+  aria: string;
 };
 
 const items: NavFooterItem[] = [
@@ -23,11 +23,10 @@ const items: NavFooterItem[] = [
 ];
 
 export default function NavFooter() {
-  // domyślnie aktywne "menu" (zmień jeśli chcesz inny start)
   const [activeId, setActiveId] = useState<NavFooterItemId>('menu');
 
   return (
-    <footer className="bg-soft-white sticky bottom-0 left-0 z-10 flex w-full flex-shrink-0 items-center justify-between px-6 pb-4">
+    <footer className="bg-soft-white sticky bottom-0 left-0 z-10 mx-auto flex w-full max-w-md flex-shrink-0 items-center justify-between pb-4">
       <nav aria-label="Primary actions" className="w-full">
         <ul className="flex items-center justify-between gap-2">
           {items.map(({ id, Icon, label, aria }) => {
@@ -46,7 +45,7 @@ export default function NavFooter() {
                   <Icon
                     aria-hidden="true"
                     focusable="false"
-                    className={`h-6 w-6 transition-colors duration-200 ease-in-out ${
+                    className={`h-7 w-7 transition-colors duration-200 ease-in-out ${
                       isActive
                         ? 'text-[var(--color-foreground)]'
                         : 'text-slate-400 group-hover:text-[var(--color-foreground)]'
