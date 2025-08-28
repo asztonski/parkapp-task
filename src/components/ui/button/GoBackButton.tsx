@@ -1,15 +1,32 @@
+import { useNavigate } from 'react-router-dom';
 import arrowLeft from '../../../assets/arrow-left.svg';
 import circle from '../../../assets/circle.svg';
 
 type GoBackButtonProps = {
   className?: string;
+  fallbackTo?: string;
+  replace?: boolean;
 };
 
-export default function GoBackButton({ className }: GoBackButtonProps) {
+export default function GoBackButton({
+  className,
+  fallbackTo = '/login',
+  replace = true,
+}: GoBackButtonProps) {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    if (window.history.length > 2) {
+      navigate(-1);
+    } else {
+      navigate(fallbackTo, { replace });
+    }
+  };
+
   return (
     <button
       type="button"
-      onClick={() => window.history.back()}
+      onClick={handleBack}
       className={`group absolute inline-grid place-items-center ${className ?? ''}`}
       aria-label="Wróć"
       title="Wróć"
